@@ -2,13 +2,13 @@
   <div>
     <h1> Register </h1>
 
-    <input 
+    <input
       type="email"
       name="email"
       v-model="email"
       placeholder="email" >
       <br>
-      <input 
+      <input
       type="password"
       name="password"
       v-model="password"
@@ -17,7 +17,7 @@
       <button
        @click="register">
        Register
-       </button> 
+       </button>
 
       <div>
         {{password}}
@@ -36,7 +36,7 @@ export default {
     }
   },
   methods: {
-    async register() {
+    async register () {
       const response = await AuthenticationService.register({
         email: this.email,
         password: this.password
