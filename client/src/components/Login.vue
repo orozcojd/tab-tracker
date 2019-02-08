@@ -34,26 +34,34 @@
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
+import { mapActions } from 'vuex'
+
 export default {
   name: 'Login',
   data () {
     return {
       email: '',
       password: '',
-      error: null,
+      error: null
     }
   },
   methods: {
+    ...mapActions([
+      'setToken',
+      'setUser'
+    ]),
     async login () {
       try {
         const response = await AuthenticationService.login({
           email: this.email,
           password: this.password
         })
+        this.setToken(response.data.token)
+        this.setUser(response.data.user)
         console.log(response.data)
-        this.error = null;
-      } catch(error) {
-        this.error = error.response.data.error;
+        this.error = null
+      } catch (error) {
+        this.error = error.response.data.error
       }
     }
   }

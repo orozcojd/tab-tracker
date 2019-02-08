@@ -6,19 +6,24 @@
           <v-toolbar-title>Register</v-toolbar-title>
         </v-toolbar>
         <div class="pl-4 pr-4 pt-2 pb-2">
-          <v-text-field
-            type="email"
-            name="email"
-            v-model="email"
-            placeholder="email">
-          </v-text-field>
-          <br>
-          <v-text-field
-            type="password"
-            name="password"
-            v-model="password"
-            placeholder="password">
-          </v-text-field>
+          <form
+          name="tab-tracker-form"
+          autocomplete="off">
+            <v-text-field
+              type="email"
+              name="email"
+              v-model="email"
+              placeholder="email">
+            </v-text-field>
+            <br>
+            <v-text-field
+              type="password"
+              name="password"
+              autocomplete="new-password"
+              v-model="password"
+              placeholder="password">
+            </v-text-field>
+          </form>
           <br>
           <div class="error" v-html="error"/>
           <br>
@@ -34,26 +39,33 @@
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
+import { mapActions } from 'vuex'
 export default {
   name: 'Register',
   data () {
     return {
       email: '',
       password: '',
-      error: null,
+      error: null
     }
   },
   methods: {
+    ...mapActions([
+      'setToken',
+      'setUser'
+    ]),
     async register () {
       try {
         const response = await AuthenticationService.register({
           email: this.email,
           password: this.password
         })
+        this.setToken(response.data.token)
+        this.setUser(response.data.user)
         console.log(response.data)
-        this.error = null;
-      } catch(error) {
-        this.error = error.response.data.error;
+        this.error = null
+      } catch (error) {
+        this.error = error.response.data.error
       }
     }
   }
