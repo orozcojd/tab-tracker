@@ -1,4 +1,3 @@
-console.log('hello');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -16,7 +15,7 @@ app.use(cors())
 
 require('./routes')(app);
 
-sequelize.sync()
+sequelize.sync({force:true})
     .then(() => {
         app.listen(config.port);
         console.log(`server started on port ${config.port}`)
