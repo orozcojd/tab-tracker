@@ -26,7 +26,6 @@ const createStore = new Vuex.Store({
     },
     setUser (state, user) {
       state.user = user
-      console.log(state)
     }
   },
   actions: {

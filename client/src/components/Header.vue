@@ -5,8 +5,9 @@
         TabTracker
         </v-btn>
     </v-toolbar-title>
+
       <v-toolbar-items>
-        <v-btn flat dark>
+        <v-btn flat dark to="/songs">
           Browse
         </v-btn>
       </v-toolbar-items>
@@ -21,24 +22,37 @@
         </v-btn>
       </v-toolbar-items>
       <v-toolbar-items v-else>
-          <v-btn flat dark>
-            Log Off
+          <v-btn flat dark
+            @click="logout">
+            Log Out
           </v-btn>
       </v-toolbar-items>
   </v-toolbar>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Header',
   data () {
-
+    return {
+    }
   },
   methods: {
     ...mapGetters([
       'isUserLoggedin'
-    ])
+    ]),
+    ...mapActions([
+      'setToken',
+      'setUser'
+    ]),
+    logout () {
+      this.setToken(null)
+      this.setUser(null)
+      this.$router.push({
+        name: 'root'
+      })
+    }
   }
 }
 </script>
